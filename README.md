@@ -50,7 +50,8 @@ El sistema contempla diversos roles y funcionalidades clave para asegurar un pro
 
 El siguiente diagrama describe el flujo de información durante el proceso de registro en el sistema de votación, asegurando que los datos del ciudadano sean validados correctamente.
 
-![DFD Sistema de Votación REGISTRO](file:///c:/Users/dahel/OneDrive%20-%20Cardinal/Documents/ProyectodeGrado/ProyectodeGrado/ProyectodeGrado/Content/images/DFD%20Sistema%20de%20votaci%C3%B3n%20REGISTRO.png)
+<img width="798" height="316" alt="DFD Sistema de votación REGISTRO" src="https://github.com/user-attachments/assets/b6413c7f-32e7-43c5-aa45-3b9945432b6e" />
+
 
 ### Descripción del Flujo:
 1. El ciudadano ingresa sus datos personales.
