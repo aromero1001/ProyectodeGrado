@@ -34,7 +34,8 @@ El sistema está construido sobre el stack de tecnología de Microsoft, utilizan
 
 El sistema contempla diversos roles y funcionalidades clave para asegurar un proceso electoral completo.
 
-![Casos de Uso](file:///c:/Users/dahel/OneDrive%20-%20Cardinal/Documents/ProyectodeGrado/ProyectodeGrado/ProyectodeGrado/Content/images/Casos%20de%20uso.png)
+<img width="740" height="789" alt="Casos de uso" src="https://github.com/user-attachments/assets/3e2870d9-2191-457b-9c64-254390caa523" />
+
 
 ### Resumen de Funcionalidades:
 - **Registro y Autenticación:** Los usuarios pueden registrarse y acceder al sistema de forma segura.
