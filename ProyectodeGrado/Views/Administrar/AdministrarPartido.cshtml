@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "ADMINISTRAR PARTIDOS";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Administrar partidos - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        <div>
+            <!-- Acordeón uno-->
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Buscar partido</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("BuscarPartido", "Administrar")">
+                            <div class="form-group">
+                                <label for="pwd">Introduzca el nombre del partido a buscar:</label>
+                                <input type="text" name="partido_buscar" id="partido_buscar" class="form-control">
+                            </div>
+                            @if (ViewBag.Existe == true)
+                            {
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Descripción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@ViewBag.NombrePartido</td>
+                                                <td>@ViewBag.Descripcion</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger alert-dismissable">
+                                    <strong>El partido no existe.</strong> El partido que intenta buscar, no existe.
+                                </div>
+                            }
+                            <div>
+                                <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Buscar" style="margin-bottom:15px">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin del primer acordeón-->
+        <!--Comienzo del segundo acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Agregar partido</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ActualizarPartido", "Administrar")" enctype = "multipart/form-data">
+                        <h5>Agregar partido nuevo</h5>
+                        <div class="form-group">
+                            <label for="pwd">Nombre del partido:</label>
+                            <input type="text" name="partido" id="partido" class="form-control">
+                        </div>
+                        @if (@ViewBag.NoExiste == true)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> El partido que está buscando no existe.
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label for="pwd">Descripción del partido:</label>
+                            <textarea class="form-control" name="descripcion" id="exampleTextarea" rows="3"></textarea>
+                        </div>
+                        @if (@ViewBag.Lleno == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe llenar todos los campos para poder actualizar los datos.
+                            </div>
+                        }
+                        <div>
+                            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del segundo acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse5">Agregar foto a un partido</a>
+                    </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse">
+                    @using (Html.BeginForm("SubirFotoPartido", "Administrar", FormMethod.Post, new { id = "form", enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <label for="pwd">Seleccione el partido al cual desea agregar la foto:</label>
+                            <a class="btn btn-default btn-select">
+                                <input type="hidden" class="btn-select-input form-control" id="partido" name="partido"/>
+                                <span class="btn-select-value">Partido</span>
+                                <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul style="list-style: none;">
+                                    @using ProyectodeGrado.Models.SVModel
+                                    @using (SVContext db = new SVContext())
+                                    {
+                                        var partido = (from p in db.PARTIDO
+                                                       select p).ToList();
+                                        foreach (var p in partido)
+                                        {
+                                            <li role="textbox" value="F">@p.NOMBRE</li>
+                                        }
+                                    }
+                                </ul>
+                            </a>
+                        </div>
+                        <p>
+                            <input type="file" accept="image/jpeg" name="imagen" id="imagen" style="margin-bottom:15px"/>
+                        </p>
+
+                        <div>
+                            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!--Comienzo del tercer acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse4">Modificar partido</a>
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ModificarPartido", "Administrar")">
+                        <div class="form-group">
+                            <label for="pwd">Seleccione el partido que desea modificar:</label>
+                            <a class="btn btn-default btn-select">
+                                <input type="hidden" class="btn-select-input form-control" id="partido_v" name="partido_v" />
+                                <span class="btn-select-value">Partido</span>
+                                <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul style="list-style: none;">
+                                    @using ProyectodeGrado.Models.SVModel
+                                    @using (SVContext db = new SVContext())
+                                    {
+                                        var partido = (from p in db.PARTIDO
+                                                       select p).ToList();
+                                        foreach (var p in partido)
+                                        {
+                                            <li role="textbox" value="F">@p.NOMBRE</li>
+                                        }
+                                    }
+                                </ul>
+                            </a>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pwd">Nombre del partido nuevo:</label>
+                            <input type="text" name="partido_n" id="partido_n" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Descripción del partido:</label>
+                            <textarea class="form-control" name="descripcion" id="exampleTextarea" rows="3"></textarea>
+                        </div>
+                        @if (@ViewBag.Lleno == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe ingresar el nombre del partido a modificar.
+                            </div>
+                        }
+                        <div>
+                            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del tercer acordeón-->
+
+        <!--Tercer acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">Eliminar partido</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("EliminarPartido", "Administrar")">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="pwd">Seleccione el partido que desea eliminar:</label>
+                                <a class="btn btn-default btn-select">
+                                    <input type="hidden" class="btn-select-input form-control" id="partido_eliminar" name="partido_eliminar" />
+                                    <span class="btn-select-value">Partido</span>
+                                    <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                    <ul style="list-style: none;">
+                                        @using ProyectodeGrado.Models.SVModel
+                                        @using (SVContext db = new SVContext())
+                                        {
+                                            var partido = (from p in db.PARTIDO
+                                                          select p).ToList();
+                                            foreach (var p in partido)
+                                            {
+                                                <li role="textbox" value="F">@p.NOMBRE</li>
+                                            }
+                                        }
+                                    </ul>
+                                </a>
+                            </div>
+                            @*<label for="pwd">Ingrese el nombre del partido a eliminar:</label>
+                            <input type="text" name="partido_eliminar" id="partido_eliminar" class="form-control">*@
+                        </div>
+                        @if (@ViewBag.Error == true)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> El partido que desea eliminar, no existe.
+                            </div>
+                        }
+                        <button type="button" class="btn btn-custom btn-lg btn-block" data-toggle="modal" data-target="#myModal" style="margin-bottom:15px">Eliminar</button>
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Eliminar partido</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea eliminar el partido?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Eliminar" style="margin-bottom:15px">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

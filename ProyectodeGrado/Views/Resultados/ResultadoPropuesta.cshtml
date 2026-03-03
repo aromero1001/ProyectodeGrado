@@ -1,0 +1,374 @@
+﻿
+@{
+    ViewBag.Title = "RESULTADOS DE LAS ELECCIONES POR PROPUESTA";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<!DOCTYPE html>
+<script type="text/javascript">
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("propuesta",
+	{
+
+	    @using ProyectodeGrado.Models.SVModel;
+	    @using (SVContext db = new SVContext())
+        {
+            var prop = (from p in db.PROPUESTA select p).SingleOrDefault();
+            <text> title: {
+	        text: "Resultados de la propuesta: @(prop.DESCRIPCION)"},</text>
+        }
+	    animationEnabled: true,
+	    legend:{
+	        verticalAlign: "bottom",
+	        horizontalAlign: "center"
+
+	    },
+	    data: [
+
+        {
+            indexLabelFontSize: 20,
+            indexLabelFontFamily: "Monospace",
+            indexLabelFontColor: "darkgrey",
+            indexLabelLineColor: "darkgrey",
+            indexLabelPlacement: "outside",
+            type: "pie",
+            showInLegend: true,
+            toolTipContent: "{y} - <strong>#percent%</strong>",
+            dataPoints: [
+                @using ProyectodeGrado.Models.SVModel
+                    @using (SVContext db = new SVContext())
+                    {
+                        var voto = (from v in db.VOTOS
+                                    where v.ESTADO == true
+                                    select v).ToList();
+                        var propuesta = (from p in db.PROPUESTA select p).ToList();
+                        var opcion = (from o in db.OPCION_PROPUESTA select o).ToList();
+                        foreach (var i in voto.GroupBy(v => v.ID_SELECCIONADO)
+                                            .Select(g => new { idopcion = g.Key,
+                                                total = g.Count()}))
+                        {
+                            foreach (var o in opcion)
+                            {
+                                if(i.idopcion == o.ID_OPCION)
+                                {
+                           <text> {  y: @i.total, legendText:"@(o.OPCION)", indexLabel: "@(o.OPCION)" }, </text>
+                        }
+                    }
+
+                }
+
+            }
+            ]
+        }
+	    ]
+	});
+        chart.render();
+
+        var chart = new CanvasJS.Chart("genero",
+        {
+            title: {
+                text: "Resultados por género"
+            },
+            animationEnabled: true,
+            data: [
+            {
+                type: "doughnut",
+                startAngle: 60,
+                toolTipContent: "{legendText}: {y} - <strong>#percent% </strong>",
+                showInLegend: true,
+                dataPoints: [
+                    @using ProyectodeGrado.Models.SVModel
+                    @using (SVContext db = new SVContext())
+                    {
+                        string genero;
+                        var voto = (from v in db.VOTOS
+                                    where v.ESTADO == true
+                                    select v).ToList();
+                        foreach (var i in voto.GroupBy(v => v.GENERO)
+                                            .Select(g => new { genero = g.Key,
+                                                total = g.Count()}))
+                        {
+                            if (i.genero == "F")
+                            {
+                                genero = "FEMENINO";
+                            }
+                            else
+                            {
+                                genero = "MASCULINO";
+                            }
+
+                         <text> { y: @i.total, indexLabel: "@(genero) #percent%", legendText: "@(genero)" }, </text>
+                    }
+
+                    }
+                ]
+            }
+            ]
+        });
+        chart.render();
+
+
+
+        var chart = new CanvasJS.Chart("facultad",
+    {
+        title:{
+            text: "Resultados por facultades o secciones"
+        },
+        axisY:{
+            title:"Canditad de votantes"
+        },
+        animationEnabled: true,
+        data: [
+        {
+            type: "stackedColumn",
+            toolTipContent: "{label}<br/><span style='\"'color: {color};'\"'><strong>{label}</strong></span>: {y} votantes",
+            name: "FACULTADES",
+            showInLegend: "true",
+            dataPoints: [
+
+                @using ProyectodeGrado.Models.SVModel
+                @using (SVContext db = new SVContext())
+                {
+                    var voto = (from v in db.VOTOS
+                                where v.ESTADO == true
+                                select v).ToList();
+                    int x = 0;
+                    foreach (var y in voto.GroupBy(v => v.FACULTAD)
+                                           .Select(g => new
+                                           {
+                                               facultad = g.Key,
+                                               total = g.Count()
+                                           }))
+                    {
+                        x = x + 10;
+                        <text> { y: @y.total, label:"@(y.facultad)" }, </text>
+                    }
+                }
+
+            ]
+        },
+        ]
+      ,
+        legend:{
+            cursor:"pointer",
+            itemclick: function(e) {
+                if (typeof (e.dataSeries.visible) ===  "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                }
+                else
+                {
+                    e.dataSeries.visible = true;
+                }
+                chart.render();
+            }
+        }
+    });
+
+        chart.render();
+
+        var chart = new CanvasJS.Chart("nivel",
+   {
+       title:{
+           text: "Resultados por nivel de estudio"
+       },
+       axisY:{
+           title:"Canditad de votantes"
+       },
+       animationEnabled: true,
+       data: [
+       {
+           type: "stackedColumn",
+           toolTipContent: "{label}<br/><span style='\"'color: {color};'\"'><strong>{label}</strong></span>: {y} votantes",
+           name: "NIVEL DE ESTUDIO",
+           showInLegend: "true",
+           dataPoints: [
+
+               @using ProyectodeGrado.Models.SVModel
+               @using (SVContext db = new SVContext())
+               {
+                   var voto = (from v in db.VOTOS
+                               where v.ESTADO == true
+                               select v).ToList();
+                   int x = 0;
+                   foreach (var y in voto.GroupBy(v => v.NIVEL_ESTUDIO)
+                                          .Select(g => new
+                                          {
+                                              nivel = g.Key,
+                                              total = g.Count()
+                                          }))
+                   {
+                       x = x + 10;
+                <text> { y: @y.total, label:"@(y.nivel)" }, </text>
+            }
+        }
+
+           ]
+       },
+       ]
+      ,
+       legend:{
+           cursor:"pointer",
+           itemclick: function(e) {
+               if (typeof (e.dataSeries.visible) ===  "undefined" || e.dataSeries.visible) {
+                   e.dataSeries.visible = false;
+               }
+               else
+               {
+                   e.dataSeries.visible = true;
+               }
+               chart.render();
+           }
+       }
+   });
+
+        chart.render();
+
+        var chart = new CanvasJS.Chart("edad",
+   {
+       title:{
+           text: "Resultados por edades"
+       },
+       axisY:{
+           title:"Canditad de votantes"
+       },
+       animationEnabled: true,
+       data: [
+       {
+           type: "stackedColumn",
+           toolTipContent: "{label}<br/><span style='\"'color: {color};'\"'><strong>{label}</strong></span>: {y} votantes",
+           name: "EDADES",
+           showInLegend: "true",
+           dataPoints: [
+
+               @using ProyectodeGrado.Models.SVModel
+               @using (SVContext db = new SVContext())
+               {
+                   if (db.VOTOS.Any(a => a.ESTADO == true))
+                   {
+                       var voto = (from v in db.VOTOS where v.ESTADO == true select v).ToList();
+                       var v010 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 0 && e.EDAD <= 10)).Count() });
+                       var v1020 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 10 && e.EDAD <= 20)).Count() });
+                       var v2030 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 20 && e.EDAD <= 30)).Count() });
+                       var v3040 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 30 && e.EDAD <= 40)).Count() });
+                       var v4050 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 40 && e.EDAD <= 50)).Count() });
+                       var v5060 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 50 && e.EDAD <= 60)).Count() });
+                       var v6070 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 60 && e.EDAD <= 70)).Count() });
+                       var v7080 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 70 && e.EDAD <= 80)).Count() });
+                       var v8090 = voto.Select(v => new { rango = v, total = voto.Where(e => (e.EDAD > 80 && e.EDAD <= 90)).Count() });
+                       
+                       <text>{ y: @(v010.FirstOrDefault().total), label: "0 A 10" },</text>
+                       <text>{ y: @(v1020.FirstOrDefault().total), label: "10 A 20" },</text>
+                       <text>{ y: @(v2030.FirstOrDefault().total), label: "20 A 30" },</text>
+                       <text>{ y: @(v3040.FirstOrDefault().total), label: "30 A 40" },</text>
+                       <text>{ y: @(v4050.FirstOrDefault().total), label: "40 A 50" },</text>
+                       <text>{ y: @(v5060.FirstOrDefault().total), label: "50 A 60" },</text>
+                       <text>{ y: @(v6070.FirstOrDefault().total), label: "60 A 70" },</text>
+                       <text>{ y: @(v7080.FirstOrDefault().total), label: "70 A 80" },</text>
+                       <text>{ y: @(v8090.FirstOrDefault().total), label: "80 A 90" },</text>
+                   }
+
+               }
+
+           ]
+       },
+       ]
+      ,
+       legend:{
+           cursor:"pointer",
+           itemclick: function(e) {
+               if (typeof (e.dataSeries.visible) ===  "undefined" || e.dataSeries.visible) {
+                   e.dataSeries.visible = false;
+               }
+               else
+               {
+                   e.dataSeries.visible = true;
+               }
+               chart.render();
+           }
+       }
+   });
+
+        chart.render();
+
+        var chart = new CanvasJS.Chart("nulos",
+	{
+	    title:{
+	        text: "Votos válidos y votos nulos"
+	    },
+	    animationEnabled: true,
+	    legend:{
+	        verticalAlign: "bottom",
+	        horizontalAlign: "center"
+	    },
+	    data: [
+		{
+		    indexLabelFontSize: 20,
+		    indexLabelFontFamily: "Monospace",
+		    indexLabelFontColor: "darkgrey",
+		    indexLabelLineColor: "darkgrey",
+		    indexLabelPlacement: "outside",
+		    type: "pie",
+		    showInLegend: true,
+		    toolTipContent: "{y} - <strong>#percent%</strong>",
+		    dataPoints: [
+                @using ProyectodeGrado.Models.SVModel
+                    @using (SVContext db = new SVContext())
+        {
+            var voto = (from v in db.VOTOS
+                        select v).ToList();
+            foreach (var i in voto.GroupBy(v => v.ESTADO)
+                                .Select(g => new { estado = g.Key,
+                                    total = g.Count()}))
+            {
+                var vot = "";
+                if (i.estado == true)
+                {
+                    vot = "VOTO VALIDO";
+                }
+                else
+                {
+                    vot = "VOTO NULO";
+                }
+
+
+                <text> {  y: @i.total, legendText:"@(vot)", indexLabel: "@(vot)" }, </text>
+
+            }
+
+        }
+    ]
+        }
+    ]
+    });
+    chart.render();
+    }
+</script>
+
+<html lang="en">
+<head>
+    <title>Resultados - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        <script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script>
+        <div id="propuesta" style="height: 320px; width: 100%; margin-top: 10%; margin-bottom:15%"></div>
+        <div id="facultad" style="height: 320px; width: 100%; margin-top: 15%; margin-bottom:15%"></div>
+        <div id="nivel" style="height: 350px; width: 100%; margin-top: 15%; margin-bottom:15%"></div>
+        <div id="genero" style="height: 300px; width: 100%; margin-top:15%; margin-bottom:15%"></div>
+        <div id="edad" style="height: 300px; width: 100%; margin-top:15%; margin-bottom:15%"></div>
+        <div id="nulos" style="height: 300px; width: 100%; margin-top:15%; margin-bottom:15%"></div>
+    </div>
+</body>
+</html>
+

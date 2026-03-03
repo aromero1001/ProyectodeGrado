@@ -1,0 +1,5 @@
+﻿
+@model Nullable<DateTime>
+@*Esta vista es para definir el formato de el campo fecha del registro de manera que me coloque un calendario*@
+@(Model != null ? string.Format("{0:d}", Model) : string.Empty)
+

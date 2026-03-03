@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "SISTEMA DE VOTACIÓN";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Inicio - Sistema de Votación Online</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <section id="login">
+            <div class="container">
+                <div class="row">
+                    @*<div class="col-xs-12">*@
+                    <div class="col-md-6 col-xs-12">
+                        <div class="span4 offset4 well">
+                            <div class="form-wrap">
+                                <h1>Votación para candidatos</h1>
+                                <p>Información...</p>
+                            </div>
+                            </div>
+                        </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12">
+                        <div class="span4 offset4 well">
+                            <div class="form-wrap">
+                                <h1>Inicie sesión con su nombre de usuario</h1>
+                                <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off">
+                                    <div class="form-group">
+                                        <label for="nombre_usuario" class="sr-only">tb_nombreusuario</label>
+                                        <input type="text" name="nombre_usuario" id="nombre_usuario" class="form-control" placeholder="Nombre de usuario">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="key" class="sr-only">Clave</label>
+                                        <input type="password" name="clave" id="tb_clave" class="form-control" placeholder="Contraseña">
+                                    </div>
+                                    <div class="checkbox">
+                                        <span class="character-checkbox" onclick="showPassword()"></span>
+                                        <span class="label">Show password</span>
+                                    </div>
+                                    <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Aceptar">
+                                </form>
+                                <a href="#" class="forget" data-toggle="modal" data-target=".forget-modal">¿Olvidaste tu contraseña?</a>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    @*</div>*@ <!-- /.col-xs-12 -->
+                </div> <!-- /.row -->
+            </div> <!-- /.container -->
+        </section>
+    </div>
+    @*<div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">Recovery password</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Type your email account</p>
+                        <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-custom">Recovery</button>
+                    </div>
+                </div> <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div> <!-- /.modal -->*@
+</body>
+</html>

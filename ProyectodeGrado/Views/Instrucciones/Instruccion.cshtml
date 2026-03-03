@@ -1,0 +1,78 @@
+﻿
+@using ProyectodeGrado.Controllers;
+@{
+    ViewBag.Title = "INSTRUCCIONES";
+    if (CuentaController.variablesGlobales.id_rol == 1 || CuentaController.variablesGlobales.id_rol == 2)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        if (CuentaController.variablesGlobales.id_rol==3 ||CuentaController.variablesGlobales.id_rol == 4)
+        {
+            Layout = "~/Views/Shared/_LayoutUser.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_Layout2.cshtml";
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Instrucciones - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div>
+            <h4 style="text-align:center"><strong>Por favor, siga las siguientes instrucciones para poder ingresar al sistema y ejercer su voto.</strong></h4>
+
+            <ol style="text-align:justify; padding-right:20px">
+                <li style="margin-top:10px">
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> ¿Ya se ha registrado?
+                </li>
+                <li style="margin-top:10px">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Si no se ha registrado, pulse la opción "Registro" en el menú del lado izquierdo de la pantalla. El sistema pedirá que ingrese su número de cédula.
+                </li>
+                <li style="margin-top:10px">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Si ya se ha registrado, presione la opción "inicio" del lado izquierdo de la pantalla e ingrese al sistema.
+                </li>
+                <li style="margin-top:10px">
+                    Una vez que haya ingresado al sistema usted podrá:
+                    <ol>
+                        <li style="margin-top:10px">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Presionar en la opción "ver partido", "ver propuesta" o "ver candidatos", según sean el tipo de elecciones. El sistema mostrará todos los items disponibles para votar.
+                        </li>
+                        <li style="margin-top:10px">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Ejercer su voto al presionar la opción de "votar" del menú.
+                            <div>
+                                <strong>Nota:</strong> usted sólo podrá ejercer el voto en el período estipulado por la institución educativa y usted dispondrá de cierto tiempo para elegir la opción que desee votar. Por lo que se recomienda estar seguro de su elección antes de votar.
+                            </div>
+                        </li>
+                        <li style="margin-top:10px">
+                            <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Usted podrá ver los resultados al presionar en la opción de "resultados" del menú.
+                            <div>
+                                <strong>Nota:</strong> usted sólo podrá ver los resultados una vez que termine el período de votación estipulada por la institución educativa.
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+                <li style="margin-top:10px">
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Si usted no ingresa al sistema, o está desconectado, no podrá realizar ninguna de las actividades anteriores.
+                </li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

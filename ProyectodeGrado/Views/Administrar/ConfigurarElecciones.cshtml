@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "CONFIGURAR ELECCIÓN";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Configuración - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        @if (ViewBag.fecha == false)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <strong>¡Error!</strong> La fecha de inicio debe ser anterior a la fecha final de las elecciones. Por favor, inténtelo nuevamente.
+            </div>
+        }
+        <div class="col-lg-12 col-md-12">
+            <div class="span4 offset4 well">
+                <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ConfigurarElecciones", "Administrar")">
+                    <h5 style="margin-top:15px">Configurar elecciones</h5>
+                    <div class="form-group">
+                        <label for="pwd">Título de la elección:</label>
+                        <input type="text" name="titulo" id="titulo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Fecha de inicio:</label>
+                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
+                    </div>
+                    @*<div class="form-group">
+                            <label for="pwd">Hora de inicio:</label>
+                            <input type="time" name="hora_inicio" id="hora_inicio" class="form-control">
+                        </div>*@
+                    <div class="form-group">
+                        <label for="pwd">Fecha de fin:</label>
+                        <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Hora de finalización:</label>
+                        <input type="time" name="hora" id="hora" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Elija el tipo de institución</label>
+                        <a class="btn btn-default btn-select">
+                            <input type="hidden" class="btn-select-input form-control" id="t_institucion" name="t_institucion" />
+                            <span class="btn-select-value">Tipo de institución</span>
+                            <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                            <ul style="list-style: none;">
+                                <li role="textbox" value="C">Colegio o liceo</li>
+                                <li role="textbox" value="P">Universidad</li>
+                                <li role="textbox" value="P">Instituto</li>
+                                <li role="textbox" value="P">Otro</li>
+                            </ul>
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Nombre de la institución:</label>
+                        <input type="text" name="nombre_institucion" id="nombre_institucion" class="form-control">
+                    </div>
+                    @*<div class="form-group">
+                            <label for="pwd">Descripción de la elección:</label>
+                            <input type="text" name="descripcion" id="descripcion" class="form-control">
+                        </div>*@
+                    <div class="form-group">
+                        <label for="exampleTextarea">Descripción</label>
+                        <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Duración del voto:</label>
+                        <input type="text" name="duracion" id="duracion" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Seleccione el tipo de elección</label>
+                        <a class="btn btn-default btn-select">
+                            <input type="hidden" class="btn-select-input form-control" id="eleccion" name="eleccion" />
+                            <span class="btn-select-value">Tipo de elecciones</span>
+                            <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                            <ul style="list-style: none;">
+                                <li role="textbox" value="C">Candidatos</li>
+                                <li role="textbox" value="P">Partidos</li>
+                                <li role="textbox" value="P">Propuesta</li>
+                            </ul>
+                        </a>
+                    </div>
+                    @if (ViewBag.Exitoso == false)
+                    {
+                        <div class="alert alert-danger alert-dismissable">
+                            <strong>ERROR</strong> Ocurrió un error, por favor inténtelo nuevamente.
+                        </div>
+                    }
+                    <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

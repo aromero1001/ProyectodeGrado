@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "CONFIGURAR";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Configuración - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        <div>
+            <!-- Acordeón uno-->
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Actualizar información de usuario</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ActualizarEmail", "Cuenta")">
+                            <div class="form-group">
+                                <label for="pwd" style="margin-top:15px">Nombre de usuario:</label>
+                                <input type="text" name="nom_user" id="nom_user" class="form-control" value="@(ViewBag.NombreUsuario)" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Número de cédula:</label>
+                                <input type="text" name="cedula" id="cedula" class="form-control" value="@(ViewBag.Cedula)" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Tipo de usuario:</label>
+                                <input type="text" name="tipo_usuario" id="tipo_usuario" class="form-control" value="@(ViewBag.TipoUsuario)" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Correo electrónico:</label>
+                                <input type="text" name="correo" id="correo" class="form-control">
+                            </div>
+                            @if (ViewBag.CambioCorreo == false)
+                            {
+                                <div class="alert alert-danger alert-dismissable">
+                                    <strong>ERROR</strong> No se pudo actualizar el correo, por favor ingrese un correo válido.
+                                </div>
+                            }
+                            <div>
+                                <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin del primer acordeón-->
+        <!--Comienzo del segundo acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Actualizar preguntas de seguridad</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ActualizarPreguntas", "Cuenta")">
+                        <h5 style="margin-top:15px">Cambiar preguntas de seguridad</h5>
+                        <div class="form-group">
+                            <label for="pwd">Primera pregunta</label>
+                            <input type="text" name="pregunta1" id="pregunta1" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Respuesta de la primera pregunta</label>
+                            <input type="text" name="respuesta1" id="respuesta1" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Segunda pregunta:</label>
+                            <input type="text" name="pregunta2" id="pregunta2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Respuesta de la segunda pregunta</label>
+                            <input type="text" name="respuesta2" id="respuesta2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Tercera pregunta:</label>
+                            <input type="text" name="pregunta3" id="pregunta3" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Respuesta de la segunda pregunta</label>
+                            <input type="text" name="respuesta3" id="respuesta3" class="form-control">
+                        </div>
+                        @if (ViewBag.CambioPreguntas == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR</strong> No debe dejar la respuesta o pregunta en blanco.
+                            </div>
+                        }
+                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del segundo acordeón-->
+        <!--Tercer acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">Actualizar contraseña</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ActualizarClave", "Cuenta")">
+                        <h5 style="margin-top:15px">Cambiar contraseña</h5>
+                        @if (ViewBag.Vacio == true)
+                        {
+                            <div class="alert alert-warning alert-dismissable">
+                                <strong>¡Advertencia!</strong> Ocurrió un error. Se le recuerda que debe llenar todos los campos.
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label for="pwd">Ingrese su clave actual:</label>
+                            <input type="password" name="clave_vieja" id="clave_vieja" class="form-control">
+                        </div>
+                        @if (ViewBag.ClaveActual == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR</strong> La contraseña que ingresó no coincide con la actual. Por favor, inténtelo nuevamente.
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label for="pwd">Ingrese su nueva clave:</label>
+                            <input type="password" name="clave_nueva" id="clave_nueva" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Repita su nueva clave:</label>
+                            <input type="password" name="clave_confirmar" id="clave_confirmar" class="form-control">
+                        </div>
+                        @if (ViewBag.ClaveCoinciden == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR</strong> Las contraseñas no coinciden. Inténtelo nuevamente.
+                            </div>
+                        }
+                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

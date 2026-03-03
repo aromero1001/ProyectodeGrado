@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "CONFIGURACIÓN";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Configuración - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        <!--Mensaje de cambio exitoso-->
+        @if (ViewBag.CambioExitoso == true)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <strong>¡Cambio exitoso!</strong> Usted ha cambiado exitosamente su información. Haga clic en las opciones de abajo para verificar su cambio.
+            </div>
+        }
+
+        <!--Advertencia-->
+        <div class="alert alert-info alert-dismissable">
+            <strong>¡Información!</strong> Usted no puede visualizar la contraseña. Si desea cambiarla, debe presionar el botón de "editar información".
+        </div>
+
+        <div>
+            <!-- Acordeón uno-->
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Datos básicos</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <form role="form" method="post" id="login-form" autocomplete="off">
+                            <div class="form-group">
+                                <label for="pwd" style="margin-top:15px">Nombre de usuario:</label>
+                                <input type="text" name="nom_user" id="nom_user" class="form-control" value="@(ViewBag.NombreUsuario)" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Número de cédula:</label>
+                                <input type="text" name="cedula" id="cedula" class="form-control" value="@(ViewBag.Cedula)" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Tipo de usuario:</label>
+                                <input type="text" name="tipo_usuario" id="tipo_usuario" class="form-control" value="@(ViewBag.TipoUsuario)" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Correo electrónico:</label>
+                                <input type="text" name="correo" id="correo" class="form-control" value="@(ViewBag.Correo)" disabled style="margin-bottom:15px">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin del primer acordeón-->
+        <!--Comienzo del segundo acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Preguntas de seguridad</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" ">
+                        <h5 style="margin-bottom:15px">Preguntas de seguridad</h5>
+                        <div class="form-group">
+                            <label for="pwd">Primera pregunta</label>
+                            <input type="text" name="pregunta1" id="pregunta1" class="form-control" value="@(ViewBag.Pregunta1)" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Segunda pregunta:</label>
+                            <input type="text" name="pregunta2" id="pregunta2" class="form-control" value="@(ViewBag.Pregunta2)" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Tercera pregunta:</label>
+                            <input type="text" name="pregunta3" id="pregunta3" class="form-control" value="@(ViewBag.Pregunta3)" disabled>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del segundo acordeón-->
+        <div>
+            <a href="@Url.Action("Configurar", "Cuenta")" class="btn btn-custom btn-lg btn-block" role="button" style="margin-bottom:15px">Editar información</a>
+        </div>
+        </div>
+</body>
+</html>
+
+

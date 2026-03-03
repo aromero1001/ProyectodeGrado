@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "VER PARTIDOS ACTUALES";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ver partidos - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Foto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @using ProyectodeGrado.Models.SVModel
+                        @using (SVContext db = new SVContext())
+                        {
+                            var partido = (from p in db.PARTIDO
+                                           select p).ToList();
+                            foreach (var p in partido)
+                            {
+                                <tr>
+                                <td>@p.NOMBRE</td>
+                                <td>@p.DESCRIPCION</td>
+                                <td><img src="~/Content/images/@(p.ID_PARTIDO).jpg" style="height:200px;width:200px;" /></td>
+                                </tr>
+                            }
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+

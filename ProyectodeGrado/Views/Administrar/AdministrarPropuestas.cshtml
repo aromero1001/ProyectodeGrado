@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewBag.Title = "ADMINISTRAR PROPUESTAS";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Administrar propuesta - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div>
+            @if (ViewBag.EliminarPropuesta == true || ViewBag.AgregarOpcione == true || ViewBag.ModificarOpcion == true
+                || ViewBag.EliminarOpcion == true)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <strong>¡Cambio exitoso!</strong> Todos sus cambios se han guardado satisfactoriamente.
+                </div>
+            }
+            @if (ViewBag.AgregarPropuesta == true)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <strong>¡Su propuesta fue agregada exitosamente!</strong> Ahora puede realizar cambios en su propuesta.
+                </div>
+            }
+            <!-- Acordeón uno-->
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Ver propuesta actual</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <form role="form" method="post" id="login-form" autocomplete="off">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="margin-top:15px">@(ViewBag.Propuesta)</div>
+                                @using ProyectodeGrado.Models.SVModel
+                                @using (SVContext db = new SVContext())
+                                {
+                                    var opcion = (from o in db.OPCION_PROPUESTA
+                                                  select o).ToList();
+                                    foreach (var o in opcion)
+                                    {
+                                        <div class="panel-body">@o.OPCION</div>
+                                    }
+                                }
+                            </div>
+                            <div>
+                                <a href="@Url.Action("EliminarPropuesta", "Administrar")" class="btn btn-custom btn-lg btn-block" role="button" style="margin-bottom:15px">Eliminar propuesta</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin del primer acordeón-->
+        <!--Comienzo del segundo acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Agregar opción</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("AgregarOpcion", "Administrar")">
+                        <div class="form-group">
+                            <label for="pwd" style="margin-top:15px">Opción nueva:</label>
+                            <input type="text" name="opcion" id="opcion" class="form-control">
+                        </div>
+                        @if (@ViewBag.AgregarOpcion == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe ingresar una opción antes de continuar.
+                            </div>
+                        }
+                        <div>
+                            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del segundo acordeón-->
+        <!--Comienzo del tercer acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse4">Modificar opciones</a>
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ModificarOpcion", "Administrar")">
+                        <div class="form-group">
+                            <label for="pwd" style="margin-top:15px">Seleccione la opción que desea modificar:</label>
+                            <a class="btn btn-default btn-select">
+                                <input type="hidden" class="btn-select-input form-control" id="opcion" name="opcion" />
+                                <span class="btn-select-value">Opción</span>
+                                <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul style="list-style: none;">
+                                    @using ProyectodeGrado.Models.SVModel
+                                    @using (SVContext db = new SVContext())
+                                    {
+                                        var opcion = (from o in db.OPCION_PROPUESTA
+                                                      select o).ToList();
+                                        foreach (var o in opcion)
+                                        {
+                                            <li role="textbox" value="F">@o.OPCION</li>
+                                        }
+                                    }
+                                </ul>
+                            </a>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Opción nueva:</label>
+                            <input type="text" name="n_opcion" id="n_opcion" class="form-control">
+                        </div>
+                        @if (@ViewBag.ModificarOpcion == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe llenar todos los campos antes de continuar.
+                            </div>
+                        }
+                        <div>
+                            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del tercer acordeón-->
+        <!--Tercer acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">Eliminar opción</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("EliminarOpcion", "Administrar")">
+                        <div class="form-group">
+                            <label for="pwd" style="margin-top:15px">Seleccione la opción que desea eliminar:</label>
+                            <a class="btn btn-default btn-select">
+                                <input type="hidden" class="btn-select-input form-control" id="opcion" name="opcion" />
+                                <span class="btn-select-value">Opción</span>
+                                <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul style="list-style: none;">
+                                    @using ProyectodeGrado.Models.SVModel
+                                    @using (SVContext db = new SVContext())
+                                    {
+                                        var opcion = (from o in db.OPCION_PROPUESTA
+                                                      select o).ToList();
+                                        foreach (var o in opcion)
+                                        {
+                                            <li role="textbox" value="F">@o.OPCION</li>
+                                        }
+                                    }
+                                </ul>
+                            </a>
+                        </div>
+                        @if (@ViewBag.EliminarOpcion == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe seleccionar una opción para poder realizar la operación.
+                            </div>
+                        }
+                        <button type="button" class="btn btn-custom btn-lg btn-block" data-toggle="modal" data-target="#myModal" style="margin-bottom:15px">Eliminar</button>
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Eliminar propuesta</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea eliminar la opción seleccionada?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Eliminar" style="margin-bottom:15px">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+       
+        </div>
+        </div>
+</body>
+</html>
+

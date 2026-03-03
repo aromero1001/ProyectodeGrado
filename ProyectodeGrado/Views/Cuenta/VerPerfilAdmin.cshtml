@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "VER PERFIL";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ver perfil - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        @if (ViewBag.CambioExitoso == true)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <strong>¡Cambio exitoso!</strong> Usted ha cambiado exitosamente su perfil. Usted puede ver los cambios abajo.
+            </div>
+        }
+
+        <div class="alert alert-warning alert-dismissable">
+            <strong>¡Advertencia!</strong> Todos los campos deben estar llenos. Si presenta problemas desbloqueando su cuenta, diríjase a su institución educativa.
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+            <div class="span4 offset4 well">
+                <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("EditarPerfil", "Cuenta")">
+                    <h5 style="margin-top:15px">Ver perfil</h5>
+                    <div class="form-group">
+                        <label for="pwd">Nombre de usuario:</label>
+                        <input type="text" name="nom_user" id="nom_user" class="form-control" value="@(ViewBag.NombreUsuario)" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Número de cédula:</label>
+                        <input type="text" name="cedula" id="cedula" class="form-control" value="@(ViewBag.Cedula)" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Tipo de usuario:</label>
+                        <input type="text" name="tipo_usuario" id="tipo_usuario" class="form-control" value="@(ViewBag.TipoUsuario)" disabled>
+                    </div>
+                    @if (ViewBag.Candidato == true)
+                    {
+                        <div class="form-group">
+                            <label for="exampleTextarea">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="exampleTextarea" rows="3" value="@ViewBag.Descripcion" disabled></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Tipo de usuario:</label>
+                            <input type="text" name="partido" id="partido" class="form-control" value="@(ViewBag.Partido)" disabled>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label for="pwd">Fecha de nacimiento:</label>
+                        <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control" value="@(ViewBag.FechaNacimiento)" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Tipo de estudio:</label>
+                        <input type="text" name="tipo_estudio" id="tipo_estudio" class="form-control" value="@(ViewBag.TipoEstudio)" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Nivel de estudio:</label>
+                        <input type="text" name="nivel_estudio" id="nivel_Estudio" class="form-control" value="@(ViewBag.NivelEstudio)" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Facultad o sección</label>
+                        <input type="text" name="facultad" id="facultad" class="form-control" value="@(ViewBag.Facultad)" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Seleccione su género</label>
+                        <a class="btn btn-default btn-select disabled">
+                            <input type="hidden" class="btn-select-input form-control" id="genero" name="genero" />
+                            <span class="btn-select-value">@ViewBag.genero</span>
+                            <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                            <ul style="list-style: none;">
+                                <li role="textbox" value="F">Femenino</li>
+                                <li role="textbox" value="M">Masculino</li>
+                            </ul>
+                        </a>
+                    </div>
+
+                    @if (ViewBag.Exitoso == false)
+                    {
+                        <div class="alert alert-danger alert-dismissable">
+                            <strong>ERROR</strong> Ocurrió un error, por favor inténtelo nuevamente.
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+        <div>
+            <a href="@Url.Action("EditarPerfil", "Cuenta")" class="btn btn-custom btn-lg btn-block" role="button" style="margin-bottom:15px">Editar perfil</a>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "ADMINISTRAR USUARIOS";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Administrar usuarios - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+
+        <div>
+            <!-- Acordeón uno-->
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Buscar usuario</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("BuscarUsuario", "Administrar")">
+                            <div class="form-group">
+                                <label for="pwd" style="margin-top:15px">Introduzca el número de cédula del usuario a buscar:</label>
+                                <input type="text" name="ced_buscar" id="ced_buscar" class="form-control">
+                            </div>
+                            @if(ViewBag.Existe == true)
+                            {
+                                <div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Cédula</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th>Tipo de usuario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@ViewBag.Cedula</td>
+                                                <td>@ViewBag.Nombre</td>
+                                                <td>@ViewBag.Apellido</td>
+                                                <td>@ViewBag.TipoUsuario</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger alert-dismissable">
+                                    <strong>Usuario no existe.</strong> La cédula que ingresó, no pertenece a ningún usuario.
+                                </div>
+                            }
+                            <div>
+                                <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Buscar" style="margin-bottom:15px">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin del primer acordeón-->
+        <!--Comienzo del segundo acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Actualizar o agregar usuario</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("ActualizarUsuarios", "Administrar")">
+                        <div class="form-group">
+                            <label for="pwd" style="margin-top:15px">Seleccione la acción que desea realizar:</label>
+                            <a class="btn btn-default btn-select">
+                                <input type="hidden" class="btn-select-input form-control" id="accion" name="accion" />
+                                <span class="btn-select-value">Acción</span>
+                                <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul style="list-style: none;">
+                                    <li role="textbox" value="M">Modificar</li>
+                                    <li role="textbox" value="A">Agregar</li>
+                                </ul>
+                            </a>
+                        </div>
+                        @if (@ViewBag.Opcion == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe elegir una acción para poder actualizar los datos.
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label for="pwd">Cédula del usuario:</label>
+                            <input type="text" name="ced" id="ced" class="form-control">
+                        </div>
+                        @if (@ViewBag.NoExiste == true)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> El usuario que está buscando no existe.
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label for="pwd">Nombre del usuario:</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Apellido del usuario:</label>
+                            <input type="text" name="apellido" id="apellido" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Seleccione el tipo de usuario:</label>
+                            <a class="btn btn-default btn-select">
+                                <input type="hidden" class="btn-select-input form-control" id="tipo_usuario" name="tipo_usuario" />
+                                <span class="btn-select-value">Tipo de usuario</span>
+                                <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
+                                <ul style="list-style: none;">
+                                    <li role="textbox" value="C">Candidato</li>
+                                    <li role="textbox" value="P">Votante</li>
+                                    <li role="textbox" value="P">Administrador</li>
+                                </ul>
+                            </a>
+                        </div>
+                        @if (@ViewBag.Lleno == false)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> Debe llenar todos los campos para poder actualizar los datos.
+                            </div>
+                        }
+                        <div>
+                            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Guardar cambios" style="margin-bottom:15px">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Fin del segundo acordeón-->
+        <!--Tercer acordeón-->
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">Eliminar usuario</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("EliminarUsuario", "Administrar")">
+                        <div class="form-group">
+                            <label for="pwd" style="margin-top:15px">Ingrese la cédula del usuario a eliminar:</label>
+                            <input type="text" name="ced_eliminar" id="ced_eliminar" class="form-control">
+                        </div>
+                        @if (@ViewBag.Error == true)
+                        {
+                            <div class="alert alert-danger alert-dismissable">
+                                <strong>ERROR.</strong> El usuario que intenta eliminar no existe o usted no tiene permiso para eliminar.
+                            </div>
+                        }
+                        <button type="button" class="btn btn-custom btn-lg btn-block" data-toggle="modal" data-target="#myModal" style="margin-bottom:15px">Eliminar</button>
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Eliminar usuario</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea eliminar el usuario?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Eliminar" style="margin-bottom:15px">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+</body>
+</html>
+
+

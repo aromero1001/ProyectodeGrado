@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "AGREGAR PROPUESTA";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Administrar propuesta - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <div class="span4 offset4 well">
+                @if (ViewBag.Completo == false)
+                {
+                    <div class="alert alert-danger alert-dismissable">
+                        <strong>ERROR.</strong> Debe ingresar el título de la propuesta, su respectiva descripción y al menos dos opciones.
+                    </div>
+                }
+                <div class="alert alert-warning alert-dismissable">
+                    <strong>¡Advertencia!</strong> Usted no tiene registrado ninguna propuesta, por favor llene el siguiente formulario.
+                </div>
+                <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("AgregarPropuesta", "Administrar")">
+                    <h3 style="margin-top:15px">AGREGAR PROPUESTA</h3>
+                    <div class="form-group">
+                        <label for="pwd">Título de la propuesta:</label>
+                        <input type="text" name="propuesta" id="propuesta" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Descripción de la propuesta:</label>
+                        <textarea class="form-control" name="descripcion" id="exampleTextarea" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Primera opción:</label>
+                        <input type="text" name="opcion1" id="opcion1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Segunda opción:</label>
+                        <input type="text" name="opcion2" id="opcion2" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Tercera opción (opcional):</label>
+                        <input type="text" name="opcion3" id="opcion3" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Cuarta opción (opcional):</label>
+                        <input type="text" name="opcion4" id="opcion4" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Quinta opción (opcional):</label>
+                        <input type="text" name="opcion5" id="opcion5" class="form-control">
+                    </div>
+                    <div>
+                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Agregar" style="margin-bottom:15px">
+                    </div>
+                </form>
+            </div>
+        </div>
+                
+        </div>
+
+</body>
+</html>
+

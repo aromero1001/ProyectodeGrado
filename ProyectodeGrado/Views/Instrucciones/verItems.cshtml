@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "VER ITEMS DE ELECCIÓN";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ver items de elección - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div>
+            @using ProyectodeGrado.Models.SVModel;
+            @using (SVContext db = new SVContext())
+            {
+                var tipoeleccion = (from e in db.ELECCION
+                                    select e.ID_TIPO_ELECCION);
+                if (tipoeleccion.FirstOrDefault() == 1)
+                {
+                    <h3 style="margin-top:40px"> CANDIDATOS: </h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>CÉDULA</th>
+                                <th>NOMBRE</th>
+                                <th>APELLIDO</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>PARTIDO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                    @{
+                        var candidato = (from c in db.CANDIDATO
+                                         select c).ToList();
+
+                        var usuario = (from u in db.USUARIO
+                                       select u).ToList();
+
+                        var partido = (from p in db.PARTIDO
+                                       select p).ToList();
+
+                        foreach (var c in candidato)
+                        {
+                                    <tr>
+                                        @foreach (var u in usuario)
+                                        {
+                                            if (c.ID_USUARIO == u.ID_USUARIO)
+                                            {
+                                                <td>@u.CEDULA</td>
+                                                <td>@u.NOMBRE</td>
+                                                <td>@u.APELLIDO</td>
+                                                <td>@u.DESCRIPCION</td>
+
+                                                foreach (var p in partido)
+                                                {
+                                                    if (c.ID_PARTIDO == p.ID_PARTIDO)
+                                                    {
+                                                        <td>@p.NOMBRE</td>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <h3 style="margin-top:50px">
+                        PARTIDOS:
+                    </h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>FOTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var p in partido)
+                                {
+                                    <tr>
+                                        <td>@p.NOMBRE</td>
+                                        <td>@p.DESCRIPCION</td>
+                                        <td><img src="~/Content/images/@(p.ID_PARTIDO).jpg" style="height:200px;width:200px;" /></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                                }
+                                if (tipoeleccion.FirstOrDefault() == 2)
+                                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>FOTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var partido = (from p in db.PARTIDO
+                                               select p).ToList();
+                                foreach (var p in partido)
+                                {
+                                    <tr>
+                                        <td>@p.NOMBRE</td>
+                                        <td>@p.DESCRIPCION</td>
+                                        <td><img src="~/Content/images/@(p.ID_PARTIDO).jpg" style="height:200px;width:200px;" /></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                                }
+                                if (tipoeleccion.FirstOrDefault() == 3)
+                                {
+                                    var propuesta = (from p in db.PROPUESTA select p).FirstOrDefault();
+                    <h3 style="text-align:center"> Propuesta: <strong>@propuesta.TITULO</strong></h3>
+                    <h4 style="text-align:center"> Descripción de la propuesta: ¿@propuesta.DESCRIPCION</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>OPCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                    @{
+                        var opcion = (from o in db.OPCION_PROPUESTA select o.OPCION).ToList();
+                                foreach (var o in opcion)
+                                {
+                                    <tr>
+                                        <td>@o</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    
+                }
+            }
+           
+        </div>
+    </div>
+</body>
+</html>

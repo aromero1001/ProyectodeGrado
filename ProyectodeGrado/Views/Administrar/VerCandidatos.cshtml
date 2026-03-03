@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "VER CANDIDATOS";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ver candidatos - Sistema de Votación</title>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre de usuario</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Patido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @using ProyectodeGrado.Models.SVModel
+                    @using (SVContext db = new SVContext())
+                    {
+                        var candidato = ( from c in db.CANDIDATO
+                                          select c).ToList();
+
+                        var usuario = (from u in db.USUARIO
+                                       select u).ToList();
+
+                        var partido = (from p in db.PARTIDO
+                                       select p).ToList();
+
+                        foreach (var c in candidato)
+                        {
+                            <tr>
+                                @foreach (var u in usuario)
+                                {
+                                    if(c.ID_USUARIO==u.ID_USUARIO)
+                                    {
+                                        <td>@u.CEDULA</td>
+                                        <td>@u.NOMBRE_USUARIO</td>
+                                        <td>@u.NOMBRE</td>
+                                        <td>@u.APELLIDO</td>
+
+                                        foreach (var p in partido)
+                                        {
+                                            if (c.ID_PARTIDO == p.ID_PARTIDO)
+                                            {
+                                                <td>@p.NOMBRE</td>
+                                            }
+                                        }
+                                    }
+                                }
+                             </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

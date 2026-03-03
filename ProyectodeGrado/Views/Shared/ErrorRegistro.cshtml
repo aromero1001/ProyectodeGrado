@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "REGISTRO INVÁLIDO";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro - Sistema de Votación Online</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div class="alert alert-danger alert-dismissable">
+            <strong>¡Registro inválido!</strong> Los datos ingresados son inválidos, por favor inténtelo nuevamente.
+        </div>
+        <p style="text-align:center">
+            <i class="fa fa-times-circle fa-5x" style="font-size: 12em; text-align:center; color:#D50000"></i>
+        </p>
+    </div>
+</body>
+</html>
+

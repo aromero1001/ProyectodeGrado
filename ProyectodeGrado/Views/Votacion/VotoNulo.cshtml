@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "VOTO NULO";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Votación - Sistema de Votación Online</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div class="alert alert-danger alert-dismissable">
+            <strong>¡Voto nulo!</strong> El tiempo de su voto ha expirado.
+        </div>
+        <p style="text-align:center">
+            <i class="fa fa-times-circle fa-5x" style="font-size: 12em; text-align:center; color:#D50000"></i>
+        </p>
+    </div>
+</body>
+</html>
+
+

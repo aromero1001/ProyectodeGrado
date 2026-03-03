@@ -1,0 +1,54 @@
+﻿@model ProyectodeGrado.Models.SVModel.PARTIDO
+
+@{
+    ViewBag.Title = "VOTACIÓN POR PARTIDOS";
+    Layout = "~/Views/Shared/_LayoutVoto.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Votación - Sistema de Votación Online</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Refresh" content="20; @Url.Action("VotoNulo", "Votacion")" />
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+    </div>
+    <form role="form" method="post" id="login-form" autocomplete="off" action="@Url.Action("VotarPartido", "Votacion",new { id = Model.ID_PARTIDO })">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Votacion por Partido</h4>
+            @Html.HiddenFor(model => model.ID_PARTIDO)
+            <div class="form-group">
+                @Html.LabelFor(model => model.NOMBRE, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NOMBRE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disable = true } })
+                    @Html.ValidationMessageFor(model => model.NOMBRE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DESCRIPCION, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DESCRIPCION, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disable = true } })
+                    @Html.ValidationMessageFor(model => model.DESCRIPCION, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Votar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <div>
+        @*@Html.ActionLink("Regresar", "Partido")*@
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "SISTEMA DE VOTACIÓN";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Inicio - Sistema de Votación Online</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h2> <strong> @ViewBag.Title </strong> </h2>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            @if (ViewBag.EsCandidato == true)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <strong>¡Ingreso exitoso!</strong> Usted ha ingresado como <strong>candidato</strong>.
+                </div>
+            }
+            @if (ViewBag.EsCandidato == false)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <strong>¡Ingreso exitoso!</strong> Usted ha ingresado como <strong>votante</strong>.
+                </div>
+            }
+            <div class="span4 offset4 well">
+                <div class="form-wrap">
+                    <h1>¡Gracias por ingresar al sistema!</h1>
+                    <p>@ViewBag.Bienvenida</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+            <div class="span4 offset4 well">
+                <div class="form-wrap">
+                    @using ProyectodeGrado.Models.SVModel;
+                    @using (SVContext db = new SVContext())
+                    {
+                        var eleccion = (from i in db.ELECCION
+                                        where i.ID_ELECCION == 1
+                                        select i).SingleOrDefault();
+                        var tipo_eleccion = "";
+                        if (eleccion.ID_TIPO_ELECCION == 1)
+                        {
+                            tipo_eleccion = "candidatos";
+                        }
+                        if (eleccion.ID_TIPO_ELECCION == 2)
+                        {
+                            tipo_eleccion = "partidos";
+                        }
+                        if (eleccion.ID_TIPO_ELECCION == 3)
+                        {
+                            tipo_eleccion = "propuesta";
+                        }
+                        <h1 style="text-align:center; color:#1fa67b"><strong>Información de las elecciones</strong></h1>
+                        <h2 style="color:#1fa67b; text-align:center; margin-top:7px">Elecciones para @tipo_eleccion</h2>
+                                    <p style="margin-top:7px; text-align:justify">
+                                        Las elecciones para el instituto <strong>"@eleccion.NOMBRE_INSTITUTO"</strong>
+                                        dará inicio el día <strong>@eleccion.FECHA_INICIO.ToShortDateString()</strong>
+                                        y finalizará el día <strong>@eleccion.FECHA_FIN.ToShortDateString()</strong>
+                                        a las <strong>@eleccion.FECHA_FIN.ToShortTimeString()</strong> horas.
+                                    </p>
+                                        <p>
+                                            <strong>Descripción de la elección:</strong>
+                                            @eleccion.DESCRIPCION
+                                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @Html.Partial("Tiempo")
+</body>
+
+</html>
+

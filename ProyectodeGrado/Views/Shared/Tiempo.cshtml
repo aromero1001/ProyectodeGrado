@@ -1,0 +1,29 @@
+﻿<form role="form" @*action="javascript:;"*@ method="post" id="login-form" autocomplete="off" action="@Url.Action("Seleccion", "Votacion")">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Validar tus Datos</h4>
+                </div>
+                <div class="modal-body">
+                    <h1>Tienes  @using ProyectodeGrado.Models.SVModel
+                    @using (SVContext db = new SVContext())
+                    {
+                        var eleccion = (from t in db.ELECCION
+                                        select t).ToList();
+                        var eleccionFirst = eleccion.First();
+                        <span>@eleccionFirst.DURACION_VOTO</span>
+                    }minutos  para realizar tu voto ¿Quieres continuar?</h1>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+                    <button type="submit" class="btn btn-danger">SI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

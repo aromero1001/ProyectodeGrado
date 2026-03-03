@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "ERROR DE VALIDACIÓN";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro - Sistema de Votación Online</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h3> @ViewBag.Title </h3>
+        </div>
+        <div class="alert alert-danger alert-dismissable">
+            <strong>¡Ha ocurrido un error!</strong> Ha ocurrido un error en la validación de su cédula, por favor verificar que la misma sea correcta.
+            <p>De lo contrario, usted puede presentar los siguientes problemas:</p>
+            <ol>
+                <li>Usted no ha sido autorizado para registrarse en el sistema.</li>
+                <li>Usted ya está registrado en el sistema.</li>
+            </ol>
+        </div>
+        <p style="text-align:center">
+            <i class="fa fa-ban fa-5x" style="font-size: 12em; text-align:center; color:#D50000"></i>
+        </p>
+    </div>
+</body>
+</html>
+

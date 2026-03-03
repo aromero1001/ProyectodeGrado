@@ -1,0 +1,100 @@
+﻿
+@model ProyectodeGrado.Models.SVModel.PREGUNTAS_SEGURIDAD
+@using CaptchaMvc.HtmlHelpers
+@using CaptchaMvc;
+@{
+    ViewBag.Title = "REGISTRO";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<head>
+    <title>Registro - Sistema de Votación</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="jumbotron">
+            <h2> <strong> @ViewBag.Title </strong> </h2>
+        </div>
+        <div class="control col-lg-12 col-md-12">
+            <h3> @ViewBag.Title </h3>
+
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <a href="#" class="alert-link">¡Advertencia! debe llenar todos los datos para registrarse.</a>.
+            </div>
+
+
+            <form role="form" @*action="javascript:;"*@ method="post" id="login-form" autocomplete="off" action="@Url.Action("PreguntasSeguridad1", "Registro")">
+
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        DATOS DE SEGURIDAD
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="form-group" style="visibility: hidden">
+                                    @Html.LabelFor(model => model.ID_USUARIO, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ID_USUARIO, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.idusuario, @readonly = "readonly" } })
+
+                                        @Html.ValidationMessageFor(model => model.ID_USUARIO, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="visibility: hidden">
+                                    @Html.LabelFor(model => model.N_PREGUNTA, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.N_PREGUNTA, new { htmlAttributes = new { @class = "form-control", @Value = 1 } })
+                                        @Html.ValidationMessageFor(model => model.N_PREGUNTA, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="Preguntas">
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.PREGUNTA, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                        <div class="col-md-10">
+                                            <label for="pwd">Primera pregunta:</label>
+                                            @Html.EditorFor(model => model.PREGUNTA, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PREGUNTA, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.RESPUESTA, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    <div class="col-md-10">
+                                        <label for="pwd">Respuesta:</label>
+                                        @Html.EditorFor(model => model.RESPUESTA, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.RESPUESTA, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <br />
+                                <p class="Error">  @ViewBag.ErrMessage </p>
+                                <p>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-inline">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-send"> </span>  Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+        </div>
+    </div>
+</body>
